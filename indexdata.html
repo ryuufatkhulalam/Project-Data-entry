@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Entri Data Lanjutan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-light"> <div class="sidebar" id="mySidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <h3>Menu Aplikasi</h3>
+        <a href="#" onclick="showSection('dashboard')">Dashboard</a>
+        <a href="#" onclick="showSection('dataEntry')">Entri Data Baru</a>
+        <a href="#" onclick="showSection('viewData')">Lihat & Edit Data</a>
+        <a href="#" onclick="showSection('settings')">Pengaturan</a>
+    </div>
+
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">&#9776; Buka Menu</button>
+
+        <div id="dashboard" class="content-section active">
+            <h2>Dashboard</h2>
+            <p>Selamat datang di Aplikasi Entri Data Lanjutan. Gunakan sidebar untuk navigasi.</p>
+
+            <div class="dashboard-stats">
+                <div class="stat-box">
+                    <h3>Total Data</h3>
+                    <p id="totalDataCount" class="stat-value">0</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Rata-rata Usia</h3>
+                    <p id="averageAge" class="stat-value">-</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Domain Email Terbanyak</h3>
+                    <p id="topEmailDomain" class="stat-value">-</p>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h3>Data Terakhir Ditambahkan</h3>
+                <div id="latestData" class="latest-data-card">
+                    <p><strong>Nama:</strong> <span id="latestDataNama">-</span></p>
+                    <p><strong>Email:</strong> <span id="latestDataEmail">-</span></p>
+                    <p><strong>Telepon:</strong> <span id="latestDataTelepon">-</span></p>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h3>Sebaran Email Domain</h3>
+                <ul id="emailDomainDistribution" class="domain-list">
+                    <li>Belum ada data email.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div id="dataEntry" class="content-section">
+            <h2 id="formTitle">Formulir Entri Data</h2>
+
+            <div class="guidance-section">
+                <h3>Prosedur Entri Data</h3>
+                <ol>
+                    <li>Isi semua kolom "Data Primer" (Nama Lengkap, Email, Tanggal Lahir) dengan informasi yang akurat. Kolom ini wajib diisi dan akan divalidasi ketat.</li>
+                    <li>Untuk "Nama Lengkap", setiap kata akan otomatis diawali dengan huruf kapital (contoh: Arif Muhammad).</li>
+                    <li>Untuk "Email", pastikan formatnya benar (contoh: `nama@domain.com`). Sistem akan memeriksa format ini.</li>
+                    <li>Pilih "Tanggal Lahir" yang valid dan tidak boleh di masa depan.</li>
+                    <li>Isi "Data Sekunder" (Nomor Telepon, Alamat Lengkap, Catatan Tambahan) jika tersedia. Kolom ini bersifat opsional, namun akan divalidasi jika diisi.</li>
+                    <li>*"mor Telepon" harus berupa angka antara 8 hingga 15 digit.</li>
+                    <li>Setelah semua kolom diisi, klik tombol "Simpan Data" (untuk entri baru) atau "Update Data" (untuk edit).</li>
+                    <li>Perhatikan pesan validasi yang muncul di bawah setiap kolom jika ada data yang tidak sesuai.</li>
+                </ol>
+            </div>
+
+            <form id="dataEntryForm">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap: <span class="required-star">*</span></label>
+                    <input type="text" id="nama" name="nama" required>
+                    <span class="error-message" id="namaError"></span>
+                    <p class="field-format">Format: Setiap kata diawali huruf kapital (contoh: John Doe)</p>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email: <span class="required-star">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="error-message" id="emailError"></span>
+                    <p class="field-format">Format: `nama@domain.com`</p>
+                </div>
+                <div class="form-group">
+                    <label for="tanggal_lahir">Tanggal Lahir: <span class="required-star">*</span></label>
+                    <input type="date" id="tanggal_lahir" name="tanggal_lahir" required>
+                    <span class="error-message" id="tanggalLahirError"></span>
+                    <p class="field-format">Format: Tanggal tidak boleh di masa depan</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="telepon">Nomor Telepon:</label>
+                    <input type="text" id="telepon" name="telepon">
+                    <span class="error-message" id="teleponError"></span>
+                    <p class="field-format">Format: Hanya angka, 8-15 digit</p>
+                </div>
+                <div class="form-group">
+                    <label for="alamat">Alamat Lengkap:</label>
+                    <textarea id="alamat" name="alamat" rows="3"></textarea>
+                    <p class="field-format">Format: Teks bebas</p>
+                </div>
+                <div class="form-group">
+                    <label for="catatan">Catatan Tambahan:</label>
+                    <textarea id="catatan" name="catatan" rows="4"></textarea>
+                    <p class="field-format">Format: Teks bebas</p>
+                </div>
+                <button type="submit" id="submitButton">Simpan Data</button>
+            </form>
+        </div>
+
+        <div id="viewData" class="content-section">
+            <h2>Daftar Data Tersimpan</h2>
+            <p>Klik tombol "Edit" untuk mengubah data atau "Hapus" untuk menghapus.</p>
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>Telepon</th>
+                        <th>Alamat</th>
+                        <th>Tgl Lahir</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+            <div class="export-buttons-container">
+                <button onclick="exportToCSV()" class="export-button">Ekspor ke CSV</button>
+                <button onclick="exportToJSON()" class="export-button">Ekspor ke JSON</button>
+            </div>
+        </div>
+
+        <div id="settings" class="content-section">
+            <h2>Pengaturan Aplikasi</h2>
+
+            <div class="settings-section">
+                <h3>Tema Aplikasi</h3>
+                <div class="theme-switcher">
+                    <button id="themeLightBtn" class="theme-button active" onclick="setTheme('light')">Terang</button>
+                    <button id="themeDarkBtn" class="theme-button" onclick="setTheme('dark')">Gelap</button>
+                </div>
+                <p class="setting-desc">Pilih tema tampilan aplikasi Anda.</p>
+            </div>
+
+            <div class="settings-section">
+                <h3>Informasi Aplikasi</h3>
+                <p><strong>Versi:</strong> <span id="appVersion">1.0.0</span></p>
+                <p><strong>Tanggal Dibuat:</strong> <span id="appCreationDate">14 Juli 2025</span></p>
+                <p class="setting-desc">Detail versi dan tanggal pembuatan aplikasi ini.</p>
+            </div>
+
+            <div class="settings-section warning-section">
+                <h3>Opsi Berbahaya</h3>
+                <p class="setting-desc">Gunakan opsi ini dengan hati-hati. Ini akan menghapus semua data yang tersimpan di browser Anda.</p>
+                <button id="clearAllDataBtn" class="delete-button-large">Hapus Semua Data</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
